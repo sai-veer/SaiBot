@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SaiBot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-body">
+  <div class="auth-box">
+    <h1>Register</h1>
+    <div id="custom-alert" class="alert-box" style="display: none;"></div>
+    <form id="register-form" enctype="multipart/form-data">
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Username" required />
+            <span id="username-check" class="check"></span>
+        </div>
+    
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Password" required />
+            <span id="password-check" class="check"></span>
+            <span class="toggle-password" id="toggle-password">👁️</span>
+        </div>
+     <label class="avatar-label">Upload Profile Picture (optional):</label>
+  <input type="file" id="avatarImage" name="avatarImage" accept="image/*" style="margin-bottom: 10px;" />
+
+  <!-- Emoji fallback -->
+  <label class="avatar-label">Or Choose an Emoji Avatar:</label>
+  <div class="input-group">
+    <input type="text" id="avatarEmoji" maxlength="2" placeholder="🙂" />
+    <span class="check" id="emoji-check"></span>
+        <button type="submit">Register</button>
+        <p class="switch-link">Already have an account? <a href="login.html">Login</a></p>
+    </form>
+
+  </div>
+
+  <script>
+    const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const usernameCheck = document.getElementById('username-check');
+  const passwordCheck = document.getElementById('password-check');
+
+  function showAlert(message, type = 'error') {
+  const alertBox = document.getElementById('custom-alert');
+  alertBox.textContent = message;
+  alertBox.className = `alert-box ${type}`;
+  alertBox.style.display = 'block';
+  alertBox.style.opacity = 1;
+
+  // Auto-fade after 3 seconds
+  setTimeout(() => {
+    alertBox.style.opacity = 0;
+    setTimeout(() => {
+      alertBox.style.display = 'none';
+    }, 300);
+  }, 3000);
+}
+
+
+  const validateUsername = () => {
+    const val = usernameInput.value.trim();
+    const regex = /^[a-zA-Z0-9_]{5,16}$/;
+    if (regex.test(val)) {
+      usernameCheck.textContent = '✅';
+      usernameCheck.className = 'check valid';
+      return true;
+    } else {
+      usernameCheck.textContent = '❌';
+      usernameCheck.className = 'check invalid';
+      return false;
+    }
+  };
+
+  const validatePassword = () => {
+    const val = passwordInput.value.trim();
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    if (regex.test(val)) {
+      passwordCheck.textContent = '✅';
+      passwordCheck.className = 'check valid';
+      return true;
+    } else {
+      passwordCheck.textContent = '❌';
+      passwordCheck.className = 'check invalid';
+      return false;
+    }
+  };
+
+  document.getElementById('toggle-password').addEventListener('click', () => {
+  const passwordInput = document.getElementById('password');
+  const toggle = document.getElementById('toggle-password');
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggle.textContent = '🙈';
+  } else {
+    passwordInput.type = 'password';
+    toggle.textContent = '👁️';
+  }
+});
+
+
+  usernameInput.addEventListener('input', validateUsername);
+  passwordInput.addEventListener('input', validatePassword);
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    // ✅ Username validation
+    const usernameVal = usernameInput.value.trim();
+const passwordVal = passwordInput.value.trim();
+
+const usernameRegex = /^[a-zA-Z0-9_]{5,16}$/;
+if (!usernameRegex.test(usernameVal)) {
+  showAlert("Username must be 5–16 characters long and contain only letters, numbers, or underscores.");
+  return;
+}
+
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+if (!passwordRegex.test(passwordVal)) {
+  showAlert("Password must be at least 6 characters long and include at least one letter and one number.");
+  return;
+}
+
+formData.append('username', usernameVal);
+formData.append('password', passwordVal);
+formData.append('avatarEmoji', document.getElementById('avatarEmoji').value.trim() || '🙂');
+
+
+    const avatarImage = document.getElementById('avatarImage').files[0];
+    if (avatarImage) formData.append('avatarImage', avatarImage);
+    // 🚀 Proceed with registration
+    const res = await fetch('http://localhost:5000/api/auth/register', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('userId', data.userId);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('sessionId', data.defaultSessionId);
+      window.location.href = 'index.html';
+    } else {
+      showAlert(data.error || 'Registration failed');
+    }
+  });
+</script>
+
+</body>
+</html>
