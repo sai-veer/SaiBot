@@ -1,56 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SaiBot</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="intro.css" />
 </head>
 <body>
-  <div class="main-container layout">
-    <aside class="sidebar">
-      <div class="username-bar sidebar-header">
-        <div id="avatar-container"></div>
-        <span id="username-display">Username</span>
+  <div class="hero">
+    <div class="robot">
+      <div class="head">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
       </div>
-      <ul class="tab-list"></ul>
-      <div class="sidebar-actions">
-        <button id="new-tab-btn">➕ New Chat</button>
-        <button id="clear-chat-btn">🧹 Clear Chat</button>
-        <button id="clear-tab-btn">❌ Clear Tab</button>
-        <button id="theme-toggle">🌙 Dark Mode</button>
+      <div class="body">
+        <div class="arm left"></div>
+        <div class="arm right waving"></div>
       </div>
-    </aside>
+      <div class="antenna">
+        <div class="ball"></div>
+      </div>
+    </div>
 
-    <div class="chat-area">
-      <div class="topbar">
-        <h2>SaiBot</h2>
-        <button id="logout-btn">Logout</button>
-      </div>
+    <h1>Welcome to SaiBot</h1>
+    <p>My Personalised AI Chat-Bot</p>
 
-      <div id="custom-alert" class="alert-box" style="display: none;"></div>
-
-      <div class="chat-box" id="chat-box">
-        <!-- Chat messages will appear here -->
-      </div>
-        <form id="chat-form" autocomplete="off" class="input-container">
-          <input type="text" id="user-input" placeholder="Type your message..." />
-          <button type="submit" id="send-btn">➤</button>
-        </form>
+    <div class="cta">
+      <a href="login.html" class="btn login">Login</a>
+      <a href="register.html" class="btn register">Register</a>
     </div>
   </div>
-  <!-- Rename Tab Modal -->
-<div id="rename-modal" class="modal-overlay">
-  <div class="modal-content">
-    <h3>Rename Chat Tab</h3>
-    <input type="text" id="rename-input" placeholder="Enter new name" />
-    <div class="modal-actions">
-      <button id="rename-confirm">Rename</button>
-      <button id="rename-cancel">Cancel</button>
-    </div>
-  </div>
-</div>
-
-
-  <script src="script.js"></script>
 </body>
 </html>

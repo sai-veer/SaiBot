@@ -139,7 +139,7 @@ formData.append('avatarEmoji', document.getElementById('avatarEmoji').value.trim
       localStorage.setItem('userId', data.userId);
       localStorage.setItem('token', data.token);
       localStorage.setItem('sessionId', data.defaultSessionId);
-      window.location.href = 'index.html';
+      window.location.href = 'userpage.html';
     } else {
       showAlert(data.error || 'Registration failed');
     }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SaiBot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="main-container layout">
+    <aside class="sidebar">
+      <div class="username-bar sidebar-header">
+        <div id="avatar-container"></div>
+        <span id="username-display">Username</span>
+      </div>
+      <ul class="tab-list"></ul>
+      <div class="sidebar-actions">
+        <button id="new-tab-btn">➕ New Chat</button>
+        <button id="clear-chat-btn">🧹 Clear Chat</button>
+        <button id="clear-tab-btn">❌ Clear Tab</button>
+        <button id="theme-toggle">🌙 Dark Mode</button>
+      </div>
+    </aside>
+
+    <div class="chat-area">
+      <div class="topbar">
+        <h2>SaiBot</h2>
+        <button id="logout-btn">Logout</button>
+      </div>
+
+      <div id="custom-alert" class="alert-box" style="display: none;"></div>
+
+      <div class="chat-box" id="chat-box">
+        <!-- Chat messages will appear here -->
+      </div>
+        <form id="chat-form" autocomplete="off" class="input-container">
+          <input type="text" id="user-input" placeholder="Type your message..." />
+          <button type="submit" id="send-btn">➤</button>
+        </form>
+    </div>
+  </div>
+  <!-- Rename Tab Modal -->
+<div id="rename-modal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Rename Chat Tab</h3>
+    <input type="text" id="rename-input" placeholder="Enter new name" />
+    <div class="modal-actions">
+      <button id="rename-confirm">Rename</button>
+      <button id="rename-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
