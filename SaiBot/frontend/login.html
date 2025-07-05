@@ -10,8 +10,15 @@
     <h1>Login</h1>
     <div id="custom-alert" class="alert-box" style="display: none;"></div>
     <form id="login-form">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username" required />
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required />
+        <span class="toggle-password" id="toggle-password">👁️</span>
+      </div>
+
       <button type="submit">Login</button>
       <p class="switch-link">Don't have an account? <a href="register.html">Register</a></p>
     </form>
@@ -19,58 +26,66 @@
 
   <script>
     function showAlert(message, type = 'error') {
-  const alertBox = document.getElementById('custom-alert');
-  alertBox.textContent = message;
-  alertBox.className = `alert-box ${type}`;
-  alertBox.style.display = 'block';
-  alertBox.style.opacity = 1;
+      const alertBox = document.getElementById('custom-alert');
+      alertBox.textContent = message;
+      alertBox.className = `alert-box ${type}`;
+      alertBox.style.display = 'block';
+      alertBox.style.opacity = 1;
 
-  // Auto-fade after 3 seconds
-  setTimeout(() => {
-    alertBox.style.opacity = 0;
-    setTimeout(() => {
-      alertBox.style.display = 'none';
-    }, 300);
-  }, 3000);
-}
+      setTimeout(() => {
+        alertBox.style.opacity = 0;
+        setTimeout(() => {
+          alertBox.style.display = 'none';
+        }, 300);
+      }, 3000);
+    }
 
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    const res = await fetch('https://saibot-v6q1.onrender.com/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+    document.getElementById('toggle-password').addEventListener('click', () => {
+      const passwordInput = document.getElementById('password');
+      const toggle = document.getElementById('toggle-password');
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggle.textContent = '🙈';
+      } else {
+        passwordInput.type = 'password';
+        toggle.textContent = '👁️';
+      }
     });
 
-    const data = await res.json();
-    if (res.ok) {
-      // Store token and user ID
-      localStorage.setItem('userId', data.userId);
-      localStorage.setItem('token', data.token);
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-      // 🆕 Fetch sessions using JWT token
-      const sessionRes = await fetch('https://saibot-v6q1.onrender.com/api/chat/sessions', {
-        headers: {
-          Authorization: `Bearer ${data.token}`
-        }
+      const res = await fetch('https://saibot-v6q1.onrender.com/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
       });
 
-      const sessionData = await sessionRes.json();
-      localStorage.setItem('sessionId', sessionData[0]?._id);
-      localStorage.setItem('theme', data.theme || 'dark');
-      localStorage.setItem('avatarType', data.avatarType);
-localStorage.setItem('avatarUrl', data.avatarUrl || '');
-localStorage.setItem('avatarEmoji', data.avatarEmoji || '🙂');
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem('userId', data.userId);
+        localStorage.setItem('token', data.token);
 
-      window.location.href = 'userpage.html';
-    } else {
-      showAlert(data.error || 'Login failed');
-    }
-  });
-</script>
+        const sessionRes = await fetch('https://saibot-v6q1.onrender.com/api/chat/sessions', {
+          headers: {
+            Authorization: `Bearer ${data.token}`
+          }
+        });
 
+        const sessionData = await sessionRes.json();
+        localStorage.setItem('sessionId', sessionData[0]?._id);
+        localStorage.setItem('theme', data.theme || 'dark');
+        localStorage.setItem('avatarType', data.avatarType);
+        localStorage.setItem('avatarUrl', data.avatarUrl || '');
+        localStorage.setItem('avatarEmoji', data.avatarEmoji || '🙂');
+
+        window.location.href = 'userpage.html';
+      } else {
+        showAlert(data.error || 'Login failed');
+      }
+    });
+  </script>
 </body>
 </html>
