@@ -37,7 +37,7 @@ function showAlert(message, type = 'error') {
 
 
 async function fetchUsername() {
-  const res = await fetch('http://localhost:5000/api/auth/username', {
+  const res = await fetch('https://saibot-v6q1.onrender.com/api/auth/username', {
     headers: { Authorization: `Bearer ${token}` }
   });
   const data = await res.json();
@@ -50,7 +50,7 @@ async function fetchUsername() {
   if (data.avatarUrl) {
     // inject the <img> tag
     const img = document.createElement('img');
-    img.src = `http://localhost:5000${data.avatarUrl}`;
+    img.src = `https://saibot-v6q1.onrender.com${data.avatarUrl}`;
     img.alt = 'avatar';
     img.className = 'avatar-image';
     container.appendChild(img);
@@ -75,7 +75,7 @@ userAvatar.avatarEmoji = data.avatarEmoji || '🙂';
 }
 
 async function loadTabs() {
-  const res = await fetch('http://localhost:5000/api/chat/sessions', {
+  const res = await fetch('https://saibot-v6q1.onrender.com/api/chat/sessions', {
     headers: { Authorization: `Bearer ${token}` }
   });
   const sessions = await res.json();
@@ -119,7 +119,7 @@ async function loadTabs() {
   const handleRename = async () => {
     const newName = input.value.trim();
     if (newName && newName !== session.name) {
-      await fetch(`http://localhost:5000/api/chat/${session._id}`, {
+      await fetch(`https://saibot-v6q1.onrender.com/api/chat/${session._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ async function loadTabs() {
 }
 
 async function loadMessages() {
-  const res = await fetch(`http://localhost:5000/api/chat/${currentSessionId}`, {
+  const res = await fetch(`https://saibot-v6q1.onrender.com/api/chat/${currentSessionId}`, {
     headers: { Authorization: `Bearer ${token}` }
   });
   const messages = await res.json();
@@ -181,7 +181,7 @@ function addMessage(message, sender, avatar = null) {
   avatarSpan.className = 'chat-avatar';
   if (sender === 'user') {
     if (avatar.avatarUrl) {
-      avatarSpan.innerHTML = `<img src="http://localhost:5000${avatar.avatarUrl}" class="chat-avatar-img" alt="avatar" />`;
+      avatarSpan.innerHTML = `<img src="https://saibot-v6q1.onrender.com${avatar.avatarUrl}" class="chat-avatar-img" alt="avatar" />`;
     } else {
       avatarSpan.innerHTML = `<span class="chat-avatar-emoji">${avatar.avatarEmoji || '🙂'}</span>`;
     }
@@ -227,7 +227,7 @@ chatForm.addEventListener('submit', async (e) => {
   }, 500);
 
   try {
-    const res = await fetch(`http://localhost:5000/api/chat/${currentSessionId}`, {
+    const res = await fetch(`https://saibot-v6q1.onrender.com/api/chat/${currentSessionId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -278,7 +278,7 @@ newTabBtn.onclick = async () => {
   const tabCount = existingTabs.length + 1;
   const name = `Chat ${tabCount}`;
 
-  const res = await fetch('http://localhost:5000/api/chat/session', {
+  const res = await fetch('https://saibot-v6q1.onrender.com/api/chat/session', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -295,7 +295,7 @@ newTabBtn.onclick = async () => {
 };
 
 clearChatBtn.onclick = async () => {
-  await fetch(`http://localhost:5000/api/chat/${currentSessionId}/messages`, {
+  await fetch(`https://saibot-v6q1.onrender.com/api/chat/${currentSessionId}/messages`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` }
   });
@@ -303,7 +303,7 @@ clearChatBtn.onclick = async () => {
 };
 
 clearTabBtn.onclick = async () => {
-  const res = await fetch('http://localhost:5000/api/chat/sessions', {
+  const res = await fetch('https://saibot-v6q1.onrender.com/api/chat/sessions', {
     headers: { Authorization: `Bearer ${token}` }
   });
   const sessions = await res.json();
@@ -316,7 +316,7 @@ clearTabBtn.onclick = async () => {
   const index = sessions.findIndex(s => s._id === currentSessionId);
   const newActive = sessions[index - 1] || sessions[index + 1];
 
-  await fetch(`http://localhost:5000/api/chat/${currentSessionId}`, {
+  await fetch(`https://saibot-v6q1.onrender.com/api/chat/${currentSessionId}`, {
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` }
   });
@@ -341,7 +341,7 @@ themeToggle.addEventListener('click',async () => {
   localStorage.setItem('theme', newTheme);
   themeToggle.innerText = isLight ? '🌙 Dark Mode' : '☀️ Light Mode';
   try {
-    await fetch('http://localhost:5000/api/auth/theme', {
+    await fetch('https://saibot-v6q1.onrender.com/api/auth/theme', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

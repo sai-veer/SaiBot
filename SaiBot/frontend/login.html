@@ -39,7 +39,7 @@
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
 
-    const res = await fetch('http://localhost:5000/api/auth/login', {
+    const res = await fetch('https://saibot-v6q1.onrender.com/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
@@ -52,7 +52,7 @@
       localStorage.setItem('token', data.token);
 
       // 🆕 Fetch sessions using JWT token
-      const sessionRes = await fetch('http://localhost:5000/api/chat/sessions', {
+      const sessionRes = await fetch('https://saibot-v6q1.onrender.com/api/chat/sessions', {
         headers: {
           Authorization: `Bearer ${data.token}`
         }

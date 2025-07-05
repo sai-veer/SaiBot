@@ -129,7 +129,7 @@ formData.append('avatarEmoji', document.getElementById('avatarEmoji').value.trim
     const avatarImage = document.getElementById('avatarImage').files[0];
     if (avatarImage) formData.append('avatarImage', avatarImage);
     // 🚀 Proceed with registration
-    const res = await fetch('http://localhost:5000/api/auth/register', {
+    const res = await fetch('https://saibot-v6q1.onrender.com/api/auth/register', {
       method: 'POST',
       body: formData
     });
