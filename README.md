@@ -48,20 +48,37 @@
 
 ## 📸 Screenshots
 
-**Intro Page**
-![Intro Page](https://github.com/user-attachments/assets/ce0bc745-fbf1-4684-a534-f4dd1588bf13)
+**Index Page**
+![Index Page](https://github.com/user-attachments/assets/ce0bc745-fbf1-4684-a534-f4dd1588bf13)
 **Register Page**
 ![Register Page](https://github.com/user-attachments/assets/c7b53aa8-c26a-4b2b-89e2-411a0d354d37)
 **Login Page**
 ![Login Page](https://github.com/user-attachments/assets/f982c7c4-7d16-4cc2-8189-8516994e4da6)
-**Index Page**
-![Index Page](https://github.com/user-attachments/assets/13341988-9201-4132-919c-3999d75fe3b6)
+**User Page**
+![User Page](https://github.com/user-attachments/assets/13341988-9201-4132-919c-3999d75fe3b6)
 
 ---
 
-## 🌐 Deployment
+## 🚀 Deployment
 
-The app is ready for deployment on platforms like **Render**, **Vercel**, or **Netlify (Frontend)** + **Render (Backend)**.
+### Backend (Render)
+1. Deploy the `backend` folder on [Render](https://render.com/).
+2. Add the following environment variables in Render:
+   - `MONGO_URI` = Your MongoDB Atlas connection string
+   - `PORT` = 5000 (or leave blank to use Render's default)
+   - `JWT_SECRET` = Your secure JWT secret key
+   - `GROQ_API_KEY` = Your Groq AI API key (if using AI features)
+3. Copy the Render backend URL (e.g., `https://your-backend.onrender.com`).
+
+### Frontend (Vercel or Netlify)
+1. Deploy the frontend files (`intro.html`, `login.html`, `register.html`, `userpage.html`, CSS, JS) on [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/).
+2. Make sure the frontend uses the correct backend URL in the fetch calls (update to your Render URL).
+
+### Optional:
+- Add a custom domain if required.
+- To set the landing page, rename your desired homepage as `index.html` before deployment.
+
+✅ Live Demo: [https://saibot.vercel.app/](https://saibot.vercel.app/)
 
 ---
 
